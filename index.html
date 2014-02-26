@@ -1,0 +1,87 @@
+<!doctype html>
+<html>	
+	<head>	
+		<title>Slider</title>
+		<meta charset="UTF-8">	
+		<style>
+		body{
+			width: 320px;
+			margin: 50px auto;
+			border: 2px solid #FFF;
+			text-align: center;
+			border-radius: 5px;
+			background-color: #000;
+			font-family: Helvetica;
+		}
+
+		h1{
+			margin: 0px;
+			padding: 0px;
+			background-color: #012;
+			margin-bottom: 10px;
+			color: #FFF;
+		}
+		</style>
+	</head>
+	<body onload="init()">
+		<h1 id="titre">TEACHERS DU NET</h1>
+		<canvas id="canvas" width="280" height="280">
+			Veuillez mettre votre navigateur à jour !
+		</canvas> <br/>
+	
+
+		<script>
+			var x = 0, context, ind, offset, slider_value = 0;
+			var index_color = 0;
+			var titre = document.getElementById("titre");
+
+			var photos = new Array();
+
+			for(var i = 1; i <= 10; i++){
+				var img = new Image();
+				img.src = 'images/' + i + '.jpg';
+				photos.push(img);
+			}
+
+			function init(){
+				context = document.getElementById("canvas").getContext('2d');
+				setInterval(loop, 10);
+				//setInterval(changeBackgroundTitle, 800);
+			}
+
+			function loop(){
+				changeSliderValue();
+				ind = Math.floor(x/280);
+				offset = x % 280;
+
+				context.drawImage(photos[ind], offset, 0, 280-offset, 280, 0, 0, 280 - offset, 280);
+				context.drawImage(photos[ind+1], 0, 0, 280, 280, 280 - offset, 0, 280, 280);
+			}
+
+			function changeSliderValue(){
+				x += (slider_value - x) * 0.2;
+				slider_value += 2; 
+
+				if( slider_value > 2520){
+					slider_value = 0;
+					x = 0;
+				}
+			}
+
+			/**
+			* Fonction permettant de faire clignoter le titre
+			* Aucun paramètre
+			**/
+			/*function changeBackgroundTitle(){
+				var colors = [['#CCC', '#000'], ['#012', 'orange'], ['#123', '#FFF']];
+				if(index_color > colors.length - 1){
+					index_color = 0;
+				}
+				titre.style.backgroundColor = colors[index_color][0];
+				titre.style.color = colors[index_color][1];
+				index_color++;
+			}*/
+
+		</script>
+	</body>
+</html>
